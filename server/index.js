@@ -17,10 +17,14 @@ app.get("/",(req,res)=>{
     res.send("saving circle server is running")
 })
 
-app.listen(PORT,(error)=>{
-    try {
-        console.log(`server is running on port no.${PORT}`);
-    } catch (error) {
-        console.log(`Server is not running ${error}`);
+
+
+app.listen(PORT, (error) => {
+    if (error) {
+        // If the server fails to start, log the error message
+        console.log(`Server is not running: ${error}`);
+    } else {
+        // If the server starts successfully, log the running message
+        console.log(`Server is running on port no. ${PORT}`);
     }
-})
+});
