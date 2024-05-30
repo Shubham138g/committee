@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import Connection from './server/config/db.js';
-import userModel from './server/apis/user/userModel.js';
+import router from './server/Routes/apiroute.js';
 
 const app=express();
 dotenv.config();
@@ -13,6 +13,7 @@ Connection();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(router);
 
 
 //routes

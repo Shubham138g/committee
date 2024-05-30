@@ -1,10 +1,15 @@
 import mongoose from "mongoose";
 
-const userSchema=mongoose.Schema({
+const userSchema= new mongoose.Schema({
     autoId:{
         type:Number,
         default: 0
     },
+    customerId: {
+        type: String,
+        unique: true, // Ensure customerId is unique
+        default: '' // Default empty string
+      },
     name : {
         type:String,
         default: ""
@@ -28,6 +33,10 @@ const userSchema=mongoose.Schema({
     createdAt:{
         type:Date,
         default: Date.now()
+    },
+    customerId:{
+        type:String,
+        default:0,
     }
 })
 
