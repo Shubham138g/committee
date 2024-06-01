@@ -7,7 +7,7 @@ const router =express.Router();
 
 //committee routes
 router.post("/admin/addCommittee",addCommittee);
-router.get("/admin/allCommittee",allCommittee);
+router.post("/admin/allCommittee",allCommittee);
 router.post("/admin/singleCommittee",singleCommittee);
 router.post("/admin/updateCommittee",updateCommittee);
 router.post("/admin/deleteCommittee",deleteCommittee);
