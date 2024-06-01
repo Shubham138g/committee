@@ -64,7 +64,8 @@ export const addCommittee = async (req, res) => {
 //All API
 export const allCommittee = async (req, res) => {
     try {
-        const data = await CommitteeModel.find({}).exec();
+        req.body.status = true
+        const data = await CommitteeModel.find(req.body).exec();
         res.json({
             success: true,
             status: 200,
