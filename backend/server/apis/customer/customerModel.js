@@ -23,9 +23,9 @@ const customerSchema = new mongoose.Schema({
     default: ''
   },
   userId: {
-    type: mongoose.Schema.Types.ObjectId, // Assuming userId is a reference to the User collection
-    ref: 'User',
-    required: true
+    type: mongoose.Schema.Types.ObjectId, // Assuming userId is a reference to the User collection,
+    default:null,
+    ref: 'User'
   },
   status: {
     type: Boolean,
@@ -33,22 +33,11 @@ const customerSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now()
   }
 });
 
-// Pre-save middleware to handle auto-increment of autoId
-customerSchema.pre('save', async function(next) {
-  if (this.isNew) {
-    try {
-      const highestAutoIdCustomer = await mongoose.model('Customer').findOne().sort('-autoId').exec();
-      this.autoId = highestAutoIdCustomer ? highestAutoIdCustomer.autoId + 1 : 1;
-    } catch (err) {
-      return next(err);
-    }
-  }
-  next();
-});
+
 
 // Create the model from the schema and export it
 const CustomerModel = mongoose.model('Customer', customerSchema);

@@ -1,6 +1,6 @@
 import CommitteeModel from './committeeModel.js';
 
-
+//Add API
 export const addCommittee = async (req, res) => {
     let validation = "";
     if (!req.body.committeeName) {
@@ -61,13 +61,14 @@ export const addCommittee = async (req, res) => {
     }
 }
 
+//All API
 export const allCommittee = async (req, res) => {
     try {
         const data = await CommitteeModel.find({}).exec();
         res.json({
             success: true,
             status: 200,
-            total:data.length,
+            total: data.length,
             data: data
         })
     } catch (error) {
@@ -78,20 +79,128 @@ export const allCommittee = async (req, res) => {
         })
     }
 }
+
+//Single API
 export const singleCommittee = async (req, res) => {
     try {
-        const data = await CommitteeModel.findOne({_id:req.body._id});
-        res.json({
-            success: true,
-            status: 200,
-            message: "Single Committee",
-            data: data
-        })
+        const data = await CommitteeModel.findOne({ _id: req.body._id });
+        if (data == null) {
+            res.send({
+                success: false,
+                status: 404,
+                message: "Committee does not exist",
+            })
+        }
+        else {
+            res.json({
+                success: true,
+                status: 200,
+                message: "Single Committee",
+                data: data
+            })
+        }
     } catch (error) {
         res.json({
             success: false,
             status: 400,
             message: "Error Occured " + error.message
         })
+    }
+}
+
+
+//update API
+export const updateCommittee = async (req, res) => {
+    let validation = '';
+    if (!req.body._id) {
+        validation += "_id is required"
+    }
+    if (!!validation) {
+        res.send({
+            success: false,
+            status: 400,
+            message: "Validation Error : " + validation
+        })
+    }
+    else {
+        try {
+            const data = await CommitteeModel.findOne({ _id: req.body._id })
+            if (data == null) {
+                res.send({
+                    success: false,
+                    status: 404,
+                    message: "Committee Does't exist"
+                })
+            }
+            else {
+                if (!!req.body.committeeName) data.committeeName = req.body.committeeName
+                if (!!req.body.committeeType) data.committeeType = req.body.committeeType;
+                if (!!req.body.startingDate) data.startingDate = req.body.startingDate;
+                if (!!req.body.endingDate) data.endingDate = req.body.endingDate;
+                if (!!req.body.totalMembers) data.totalMembers = req.body.totalMembers;
+                if (!!req.body.amount) data.amount = req.body.amount;
+                if (!!req.body.months) data.months = req.body.months;
+
+                const updateData = await data.save();
+                res.json({
+                    success: true,
+                    status: 200,
+                    message: "Committee Updated",
+                    data: updateData
+                })
+            }
+        } catch (error) {
+            res.json({
+                success: false,
+                status: 400,
+                message: "Error Occured " + error.message
+            })
+        }
+    }
+}
+
+
+//delete API
+export const deleteCommittee = async (req, res) => {
+    let validation = ""
+    if (!req.body._id) {
+        validation += "_id is required"
+    }
+
+    if (!!validation) {
+        res.send({
+            success: false,
+            status: 400,
+            message: "Validation Error : " + validation
+        })
+    }
+    else {
+        
+        try {
+            const data = await CommitteeModel.findOne({ _id: req.body._id });
+            if(data==null){
+                res.json({
+                    success: false,
+                    status: 404,
+                    message: "Committee Does't exist"
+                })
+            }
+            else{
+                data.status = "false"
+                const updateData = await data.save();
+                res.json({
+                    success: true,
+                    status: 200,
+                    message: "Committee deleted",
+                    data: updateData
+                })  
+            }
+        } catch (error) {
+            res.json({
+                success: false,
+                status: 400,
+                message: "Error Occured " + error.message
+            })
+        }
     }
 }

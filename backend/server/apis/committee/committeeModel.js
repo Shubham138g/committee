@@ -5,13 +5,14 @@ const committeeSchema = new mongoose.Schema({
   autoId: {
     type: Number,
     unique: true,
+    default:0
   },
   committeeName: {
     type: String,
     default: '' // Default empty string
   },
   committeeType: {
-    type: String,
+    type: String,  // bid, slip
     default: ''
   },
   startingDate: {
@@ -40,8 +41,8 @@ const committeeSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['active', 'inactive', 'completed'],
-    default: 'active' // Default value for status
+    enum: ['active', 'inactive', 'completed','true','false'],
+    default: 'true' // Default value for status
   }
 });
 

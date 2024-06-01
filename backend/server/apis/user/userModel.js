@@ -8,7 +8,7 @@ const userSchema= new mongoose.Schema({
     customerId: {
         type: String,
         unique: true, // Ensure customerId is unique
-        default: '' // Default empty string
+        default: "" // Default empty string
       },
     name : {
         type:String,
@@ -33,10 +33,6 @@ const userSchema= new mongoose.Schema({
     createdAt:{
         type:Date,
         default: Date.now()
-    },
-    customerId:{
-        type:String,
-        default:0,
     }
 })
 

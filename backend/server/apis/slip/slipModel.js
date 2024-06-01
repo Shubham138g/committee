@@ -2,10 +2,19 @@ import mongoose from 'mongoose';
 
 // Define the schema for a bid
 const slipSchema = new mongoose.Schema({
+  autoId: {
+    type: Number,
+    unique: true,
+  },
   customerId: {
     type: mongoose.Schema.Types.ObjectId, // Assuming customerId is a reference to another collection
     ref: 'Customer',
-    required: true
+    default:null
+  },
+  committeeId: {
+    type: mongoose.Schema.Types.ObjectId, // Assuming committeeId is a reference to the committee collection
+    ref: 'Committee',
+    default:null
   },
   month: {
     type: Number,
@@ -19,11 +28,6 @@ const slipSchema = new mongoose.Schema({
     type: String,
     enum: ['pending', 'accepted', 'rejected'],
     default: 'pending' // Default value for status
-  },
-  committeeId: {
-    type: mongoose.Schema.Types.ObjectId, // Assuming committeeId is a reference to the committee collection
-    ref: 'Committee',
-    required: true
   }
 });
 
