@@ -22,7 +22,7 @@ export const addUser = async (req, res) => {
     if (validation !== "") {
         res.send({
             success: false,
-            status: 500,
+            status: 400,
             message: "Validation Error " + validation
         })
     }
@@ -69,7 +69,7 @@ export const allUser = async (req, res) => {
     } catch (error) {
         res.json({
             success: false,
-            status: 400,
+            status: 500,
             message: "Error Occured " + error.message
         })
     }
@@ -79,13 +79,13 @@ export const singleUser = async (req, res) => {
 
     let validation = '';
     if (!req.body._id) {
-        validation = "_id is required"
+        validation = "_id is required \n"
     }
     if (!!validation) {
         res.send({
             success: false,
             status: 400,
-            message: "validation error" + validation
+            message: "validation error: " + validation
         })
     }
     else {
@@ -97,14 +97,15 @@ export const singleUser = async (req, res) => {
                     success: false,
                     status: 404,
                     message:"user done not exist"
-
+                    
                 })
             }
             else{
                 res.send({
                     success:true,
                     status:200,
-                    message:"single user"
+                    message:"single user",
+                    data:data
                 })
             }
         } catch (error) {
@@ -115,5 +116,4 @@ export const singleUser = async (req, res) => {
             })
         }
     }
-
 }
