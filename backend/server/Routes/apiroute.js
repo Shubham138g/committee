@@ -2,7 +2,7 @@ import express from 'express';
 import { addCommittee,allCommittee,singleCommittee,updateCommittee,deleteCommittee } from '../apis/committee/committeeController.js';
 import { addSlip } from '../apis/slip/slipController.js';
 import { addBid } from '../apis/bid/bidController.js';
-import {addUser, allUser,singleUser } from '../apis/user/userController.js';
+import {addUser, allUser,singleUser,updateUser,deleteUser } from '../apis/user/userController.js';
 
 const router =express.Router();
 
@@ -10,6 +10,8 @@ const router =express.Router();
 router.post("/admin/adduser",addUser);
 router.post("/admin/alluser",allUser);
 router.post("/admin/singleuser",singleUser);
+router.post("/admin/updateuser",updateUser);
+router.post("/admin/deleteeuser",deleteUser);
 
 //committee routes
 router.post("/admin/addCommittee",addCommittee);
