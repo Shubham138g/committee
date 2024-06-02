@@ -8,12 +8,12 @@ const slipSchema = new mongoose.Schema({
   },
   customerId: {
     type: mongoose.Schema.Types.ObjectId, // Assuming customerId is a reference to another collection
-    ref: 'Customer',
+    ref: 'customer',
     default:null
   },
   committeeId: {
     type: mongoose.Schema.Types.ObjectId, // Assuming committeeId is a reference to the committee collection
-    ref: 'Committee',
+    ref: 'committee',
     default:null
   },
   month: {

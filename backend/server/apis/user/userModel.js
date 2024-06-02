@@ -6,8 +6,8 @@ const userSchema= new mongoose.Schema({
         default: 0
     },
     customerId: {
-        type: String,
-        unique: true, // Ensure customerId is unique
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'customer',
         default: "" // Default empty string
       },
     name : {

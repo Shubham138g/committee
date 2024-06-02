@@ -49,5 +49,5 @@ const committeeSchema = new mongoose.Schema({
 
 
 // Create the model from the schema and export it
-const CommitteeModel = mongoose.model('Committee', committeeSchema);
+const CommitteeModel = mongoose.model('committee', committeeSchema);
 export default CommitteeModel;

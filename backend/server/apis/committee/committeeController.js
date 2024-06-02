@@ -54,7 +54,7 @@ export const addCommittee = async (req, res) => {
         } catch (error) {
             res.json({
                 success: false,
-                status: 400,
+                status: 500,
                 message: "Error Occured " + error.message
             })
         }
@@ -75,7 +75,7 @@ export const allCommittee = async (req, res) => {
     } catch (error) {
         res.json({
             success: false,
-            status: 400,
+            status: 500,
             message: "Error Occured " + error.message
         })
     }
@@ -83,29 +83,43 @@ export const allCommittee = async (req, res) => {
 
 //Single API
 export const singleCommittee = async (req, res) => {
-    try {
-        const data = await CommitteeModel.findOne({ _id: req.body._id });
-        if (data == null) {
-            res.send({
-                success: false,
-                status: 404,
-                message: "Committee does not exist",
-            })
-        }
-        else {
-            res.json({
-                success: true,
-                status: 200,
-                message: "Single Committee",
-                data: data
-            })
-        }
-    } catch (error) {
-        res.json({
+    let validation = ""
+    if (!req.body._id) {
+        validation = "_id is required"
+    }
+
+    if (!!validation) {
+        res.send({
             success: false,
             status: 400,
-            message: "Error Occured " + error.message
+            message: "Validation Error " + validation
         })
+    }
+    else {
+        try {
+            const data = await CommitteeModel.findOne({ _id: req.body._id });
+            if (data == null) {
+                res.send({
+                    success: false,
+                    status: 404,
+                    message: "Committee does not exist",
+                })
+            }
+            else {
+                res.json({
+                    success: true,
+                    status: 200,
+                    message: "Single Committee",
+                    data: data
+                })
+            }
+        } catch (error) {
+            res.json({
+                success: false,
+                status: 500,
+                message: "Error Occured " + error.message
+            })
+        }
     }
 }
 
@@ -153,7 +167,7 @@ export const updateCommittee = async (req, res) => {
         } catch (error) {
             res.json({
                 success: false,
-                status: 400,
+                status: 500,
                 message: "Error Occured " + error.message
             })
         }
@@ -176,17 +190,17 @@ export const deleteCommittee = async (req, res) => {
         })
     }
     else {
-        
+
         try {
             const data = await CommitteeModel.findOne({ _id: req.body._id });
-            if(data==null){
+            if (data == null) {
                 res.json({
                     success: false,
                     status: 404,
                     message: "Committee Does't exist"
                 })
             }
-            else{
+            else {
                 data.status = "false"
                 const updateData = await data.save();
                 res.json({
@@ -194,12 +208,12 @@ export const deleteCommittee = async (req, res) => {
                     status: 200,
                     message: "Committee deleted",
                     data: updateData
-                })  
+                })
             }
         } catch (error) {
             res.json({
                 success: false,
-                status: 400,
+                status: 500,
                 message: "Error Occured " + error.message
             })
         }

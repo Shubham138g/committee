@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const committeeLogSchema = new mongoose.Schema({
     committeeId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Committee',
+        ref: 'committee',
         default: null
     },
     customerId: {

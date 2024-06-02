@@ -2,8 +2,13 @@ import express from 'express';
 import { addCommittee,allCommittee,singleCommittee,updateCommittee,deleteCommittee } from '../apis/committee/committeeController.js';
 import { addSlip } from '../apis/slip/slipController.js';
 import { addBid } from '../apis/bid/bidController.js';
+import {addUser, allUser } from '../apis/user/userController.js';
 
 const router =express.Router();
+
+//User Routes
+router.post("/admin/adduser",addUser);
+router.post("/admin/alluser",allUser);
 
 //committee routes
 router.post("/admin/addCommittee",addCommittee);
