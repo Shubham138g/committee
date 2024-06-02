@@ -4,10 +4,12 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import Connection from './server/config/db.js';
 import router from './server/Routes/apiroute.js';
+import { createAdminSeeder } from './server/config/seed.js';
 
 const app=express();
 dotenv.config();
 const PORT=process.env.PORT;
+createAdminSeeder();
 Connection();
 
 app.use(cookieParser());
