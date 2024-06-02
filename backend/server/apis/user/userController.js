@@ -98,30 +98,30 @@ export const singleUser = async (req, res) => {
                 res.send({
                     success: false,
                     status: 404,
-                    message:"user done not exist"
-                    
+                    message: "user done not exist"
+
                 })
             }
-            else{
+            else {
                 res.send({
-                    success:true,
-                    status:200,
-                    message:"single user",
-                    data:data
+                    success: true,
+                    status: 200,
+                    message: "single user",
+                    data: data
                 })
             }
         } catch (error) {
             res.send({
-                success:false,
-                status:500,
-                message:"Error occured : "+error.message
+                success: false,
+                status: 500,
+                message: "Error occured : " + error.message
             })
         }
     }
 }
 
 //update API
-export const updateUser=async(req,res)=>{
+export const updateUser = async (req, res) => {
     let validation = '';
     if (!req.body._id) {
         validation += "_id is required \n"
