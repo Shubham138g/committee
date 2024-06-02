@@ -3,6 +3,7 @@ import { addCommittee,allCommittee,singleCommittee,updateCommittee,deleteCommitt
 import { addSlip } from '../apis/slip/slipController.js';
 import { addBid } from '../apis/bid/bidController.js';
 import {addUser, allUser,singleUser,updateUser,deleteUser } from '../apis/user/userController.js';
+import { addCommitteeLog } from '../apis/committeeLog/committeeLogController.js';
 
 const router =express.Router();
 
@@ -19,6 +20,10 @@ router.post("/admin/allCommittee",allCommittee);
 router.post("/admin/singleCommittee",singleCommittee);
 router.post("/admin/updateCommittee",updateCommittee);
 router.post("/admin/deleteCommittee",deleteCommittee);
+
+//committeeLog Routes
+
+router.post("/admin/addCommitteeLog",addCommitteeLog);
 
 //slip routes
 router.post("/admin/addslip",addSlip);

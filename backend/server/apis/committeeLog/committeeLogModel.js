@@ -12,11 +12,11 @@ const committeeLogSchema = new mongoose.Schema({
         ref: 'Customer',
         default:null
     },
-    month:{
+    winnermonth:{
         type: String,
         default: null
     },
-    totalAmount: {
+    winnerAmount: {
         type: Number,
         default: 0
     },
