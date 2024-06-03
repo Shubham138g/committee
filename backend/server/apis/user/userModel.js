@@ -8,7 +8,7 @@ const userSchema= new mongoose.Schema({
     customerId: {
         type: mongoose.Schema.Types.ObjectId,
         ref:'customer',
-        default: "" // Default empty string
+        default: null // Default empty string
       },
     name : {
         type:String,

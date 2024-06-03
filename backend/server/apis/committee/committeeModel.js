@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const committeeSchema = new mongoose.Schema({
   autoId: {
     type: Number,
-    unique: true,
+    // unique: true,
     default:0
   },
   committeeName: {

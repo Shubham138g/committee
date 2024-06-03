@@ -25,7 +25,7 @@ const customerSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId, // Assuming userId is a reference to the User collection,
     default:null,
-    ref: 'User'
+    ref: 'user'
   },
   status: {
     type: Boolean,
