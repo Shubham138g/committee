@@ -104,7 +104,7 @@ export const updateCustomer = async (req, res) => {
         })
     } else {
         try {
-            const userData = await userModel.findOne({ _id: req.body._id })
+            const userData = await userModel.findOne({ customerId: req.body._id })
             if (userData == null) {
                 res.send({
                     success: false,
@@ -118,16 +118,26 @@ export const updateCustomer = async (req, res) => {
 
                 const updateUser = await userData.save();
                 try {
-                    const customerData = await userModel.findOne({ _id: req.body._id })
-                    if(customerData ==null){
+                    const customerData = await CustomerModel.findOne({ _id: req.body._id })
+                    if (customerData == null) {
                         res.send({
                             success: false,
                             status: 404,
                             message: "User Does't exist"
                         })
                     }
-                    else{
-                        
+                    else {
+                        if (!!req.body.name) customerData.name = req.body.name;
+                        if (!!req.body.contact) customerData.contact = req.body.contact;
+                        if (!!req.body.email) customerData.email = req.body.email;
+                        if (!!req.body.address) customerData.address = req.body.address;
+                        const updateCustomer = await customerData.save();
+                        res.send({
+                            success:true,
+                            status:200,
+                            message:"User updated",
+                            data:{updateUser,updateCustomer}
+                        })
                     }
                 } catch (error) {
                     res.send({

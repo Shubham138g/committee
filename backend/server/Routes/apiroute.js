@@ -4,7 +4,7 @@ import { addSlip } from '../apis/slip/slipController.js';
 import { addBid } from '../apis/bid/bidController.js';
 import {addUser, allUser,singleUser,updateUser,deleteUser } from '../apis/user/userController.js';
 import { addCommitteeLog } from '../apis/committeeLog/committeeLogController.js';
-import { registerCustomer } from '../apis/customer/customerController.js';
+import { registerCustomer,updateCustomer } from '../apis/customer/customerController.js';
 
 const router =express.Router();
 
@@ -17,6 +17,7 @@ const router =express.Router();
 
 //customer API
 router.post("/customer/register",registerCustomer);
+router.post("/customer/update",updateCustomer);
 
 //committee routes
 router.post("/admin/addCommittee",addCommittee);
