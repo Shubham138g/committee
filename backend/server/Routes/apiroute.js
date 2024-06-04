@@ -2,7 +2,7 @@ import express from 'express';
 import { addCommittee,allCommittee,singleCommittee,updateCommittee,deleteCommittee } from '../apis/committee/committeeController.js';
 import { addSlip } from '../apis/slip/slipController.js';
 import { addBid } from '../apis/bid/bidController.js';
-import {login } from '../apis/user/userController.js';
+import {login,changePass } from '../apis/user/userController.js';
 import { addCommitteeLog } from '../apis/committeeLog/committeeLogController.js';
 import { registerCustomer,updateCustomer } from '../apis/customer/customerController.js';
 
@@ -19,6 +19,7 @@ const router =express.Router();
 router.post("/customer/register",registerCustomer);
 router.post("/customer/update",updateCustomer);
 router.post("/customer/login",login);
+router.post("/customer/changePass",changePass);
 
 //committee routes
 router.post("/admin/addCommittee",addCommittee);
