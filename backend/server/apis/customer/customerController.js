@@ -58,6 +58,13 @@ export const registerCustomer = async (req, res) => {
                     const savedCustomer = await custoemerObj.save();
                     try {
                         savedUser.customerId = savedCustomer._id;
+                     let  savedCustomerData=  await savedUser.save();
+                       res.send({
+                        success:true,
+                        status:200,
+                        message:"New User Added",
+                        data:savedCustomerData 
+                       })
                     } catch (error) {
                         res.send({
                             success: false,
