@@ -105,7 +105,6 @@ export const updateCustomer = async (req, res) => {
     } else {
 
         try {
-
             const userData = await userModel.findOne({ customerId: req.body._id })
             if (userData == null) {
                 res.send({
@@ -115,7 +114,6 @@ export const updateCustomer = async (req, res) => {
                 })
             }
             else {
-
                 const preUser = await userModel.findOne({ $and:[
                     {email: req.body.email},
                     {customerId : {$ne: req.body._id}}
