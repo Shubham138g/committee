@@ -103,7 +103,9 @@ export const updateCustomer = async (req, res) => {
             message: "Validation Error : " + validation
         })
     } else {
+
         try {
+
             const userData = await userModel.findOne({ customerId: req.body._id })
             if (userData == null) {
                 res.send({
@@ -113,39 +115,54 @@ export const updateCustomer = async (req, res) => {
                 })
             }
             else {
-                if (!!req.body.name) userData.name = req.body.name;
-                if (!!req.body.email) userData.email = req.body.email;
 
-                const updateUser = await userData.save();
-                try {
-                    const customerData = await CustomerModel.findOne({ _id: req.body._id })
-                    if (customerData == null) {
-                        res.send({
-                            success: false,
-                            status: 404,
-                            message: "User Does't exist"
-                        })
-                    }
-                    else {
-                        if (!!req.body.name) customerData.name = req.body.name;
-                        if (!!req.body.contact) customerData.contact = req.body.contact;
-                        if (!!req.body.email) customerData.email = req.body.email;
-                        if (!!req.body.address) customerData.address = req.body.address;
-                        const updateCustomer = await customerData.save();
-                        res.send({
-                            success:true,
-                            status:200,
-                            message:"User updated",
-                            data:{updateUser,updateCustomer}
-                        })
-                    }
-                } catch (error) {
+                const preUser = await userModel.findOne({ $and:[
+                    {email: req.body.email},
+                    {customerId : {$ne: req.body._id}}
+                ] })
+                if (!!preUser) {
                     res.send({
                         success: false,
-                        status: 500,
-                        message: "Error occuerd" + error.message
+                        status: 400,
+                        message: "Email Already exixt"
                     })
                 }
+                else {
+                    if (!!req.body.name) userData.name = req.body.name;
+                    if (!!req.body.email) userData.email = req.body.email;
+
+                    const updateUser = await userData.save();
+                    try {
+                        const customerData = await CustomerModel.findOne({ _id: req.body._id })
+                        if (customerData == null) {
+                            res.send({
+                                success: false,
+                                status: 404,
+                                message: "User Does't exist"
+                            })
+                        }
+                        else {
+                            if (!!req.body.name) customerData.name = req.body.name;
+                            if (!!req.body.contact) customerData.contact = req.body.contact;
+                            if (!!req.body.email) customerData.email = req.body.email;
+                            if (!!req.body.address) customerData.address = req.body.address;
+                            const updateCustomer = await customerData.save();
+                            res.send({
+                                success: true,
+                                status: 200,
+                                message: "User updated",
+                                data: { updateUser, updateCustomer }
+                            })
+                        }
+                    } catch (error) {
+                        res.send({
+                            success: false,
+                            status: 500,
+                            message: "Error occuerd" + error.message
+                        })
+                    }
+                }
+
             }
         } catch (error) {
             res.send({
