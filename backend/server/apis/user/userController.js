@@ -122,3 +122,49 @@ export const changePass = async (req, res) => {
         }
     }
 }
+
+export const changeStatus=async(req,res)=>{
+    let validation = '';
+    if (!req.body.email) {
+        validation += "Email is required"
+    }
+    if (!!validation) {
+        res.send({
+            success: false,
+            status: 400,
+            message: "Validation Error : " + validation
+        })
+    }
+    else{
+        const userData = await userModel.findOne({ email: req.body.email })
+        if (userData == null) {
+            res.send({
+                success: false,
+                status: 404,
+                message: "Email doesn't exist"
+            })
+        }
+        else{
+            try {
+                userData.status = !userData.status
+                const changeStatus=await userData.save();
+                res.send({
+                    success: true,
+                    status: 200,
+                    message: "Status changed",
+                    data:changeStatus
+
+                })
+            } catch (error) {
+                res.send({
+                    success: false,
+                    status: 500,
+                    message: "Error occured",
+                    
+
+                })
+            }
+           
+        }
+    }
+}
