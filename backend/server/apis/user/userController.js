@@ -17,7 +17,9 @@ export const login = (req, res) => {
         try {
             userModel.findOne({email:req.body.email})
             res.send({
-                success:404,
+                success:false,
+                status:404,
+                message:""
                 
             })
         } catch (error) {
