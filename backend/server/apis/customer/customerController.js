@@ -38,7 +38,7 @@ export const registerCustomer = async (req, res) => {
         }
         else {
             try {
-                const userTotal =await userModel.countDocuments();
+                const userTotal = await userModel.countDocuments();
                 const userObj = await userModel();
                 userObj.autoId = userTotal + 1;
                 userObj.name = req.body.name;
@@ -47,7 +47,7 @@ export const registerCustomer = async (req, res) => {
 
                 let savedUser = await userObj.save();
                 try {
-                    const customerTotal =await CustomerModel.countDocuments();
+                    const customerTotal = await CustomerModel.countDocuments();
                     const custoemerObj = await CustomerModel();
                     custoemerObj.autoId = customerTotal + 1;
                     custoemerObj.name = req.body.name;
@@ -58,13 +58,13 @@ export const registerCustomer = async (req, res) => {
                     const savedCustomer = await custoemerObj.save();
                     try {
                         savedUser.customerId = savedCustomer._id;
-                     let  savedCustomerData=  await savedUser.save();
-                       res.send({
-                        success:true,
-                        status:200,
-                        message:"New User Added",
-                        data:savedCustomerData 
-                       })
+                        let savedCustomerData = await savedUser.save();
+                        res.send({
+                            success: true,
+                            status: 200,
+                            message: "New User Added",
+                            data: savedCustomerData
+                        })
                     } catch (error) {
                         res.send({
                             success: false,
@@ -87,6 +87,62 @@ export const registerCustomer = async (req, res) => {
                     message: "Error Occuerd" + error.message
                 })
             }
+        }
+    }
+}
+
+export const updateCustomer = async (req, res) => {
+    let validation = '';
+    if (!req.body._id) {
+        validation += "_id is required"
+    }
+    if (!!validation) {
+        res.send({
+            success: false,
+            status: 400,
+            message: "Validation Error : " + validation
+        })
+    } else {
+        try {
+            const userData = await userModel.findOne({ _id: req.body._id })
+            if (userData == null) {
+                res.send({
+                    success: false,
+                    status: 404,
+                    message: "User Does't exist"
+                })
+            }
+            else {
+                if (!!req.body.name) userData.name = req.body.name;
+                if (!!req.body.email) userData.email = req.body.email;
+
+                const updateUser = await userData.save();
+                try {
+                    const customerData = await userModel.findOne({ _id: req.body._id })
+                    if(customerData ==null){
+                        res.send({
+                            success: false,
+                            status: 404,
+                            message: "User Does't exist"
+                        })
+                    }
+                    else{
+                        
+                    }
+                } catch (error) {
+                    res.send({
+                        success: false,
+                        status: 500,
+                        message: "Error occuerd" + error.message
+                    })
+                }
+            }
+        } catch (error) {
+            res.send({
+                success: false,
+                status: 500,
+                message: "Error occuerd" + error.message
+            })
         }
     }
 }
