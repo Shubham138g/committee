@@ -103,7 +103,6 @@ export const updateCustomer = async (req, res) => {
             message: "Validation Error : " + validation
         })
     } else {
-
         try {
             const userData = await userModel.findOne({ customerId: req.body._id })
             if (userData == null) {

@@ -22,9 +22,13 @@ const customerSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  image: {
+    type:String,
+    default:"user/noImg.jpg"
+  },
   userId: {
     type: mongoose.Schema.Types.ObjectId, // Assuming userId is a reference to the User collection,
-    default:null,
+    default: null,
     ref: 'user'
   },
   status: {

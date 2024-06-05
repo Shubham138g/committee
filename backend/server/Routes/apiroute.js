@@ -5,6 +5,8 @@ import { addBid } from '../apis/bid/bidController.js';
 import {login,changePass,changeStatus } from '../apis/user/userController.js';
 import { addCommitteeLog } from '../apis/committeeLog/committeeLogController.js';
 import { registerCustomer,updateCustomer } from '../apis/customer/customerController.js';
+// import multer from 'multer';
+// import multer from 'multer';
 
 const router =express.Router();
 
@@ -14,13 +16,14 @@ const router =express.Router();
 // router.post("/admin/singleuser",singleUser);
 // router.post("/admin/updateuser",updateUser);
 // router.post("/admin/deleteeuser",deleteUser);
+router.post("/admin/changePass",changePass);
+router.post("/admin/changestatus",changeStatus);
 
 //customer API
+// const multer=multer();
 router.post("/customer/register",registerCustomer);
 router.post("/customer/update",updateCustomer);
 router.post("/customer/login",login);
-router.post("/customer/changePass",changePass);
-router.post("/customer/changestatus",changeStatus);
 
 //committee routes
 router.post("/admin/addCommittee",addCommittee);
