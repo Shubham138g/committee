@@ -1,3 +1,4 @@
+import CustomerModel from '../customer/customerModel.js';
 import userModel from './userModel.js';
 import bcrypt from 'bcrypt';
 
@@ -100,16 +101,16 @@ export const changePass = async (req, res) => {
                     const passwordChange = await userData.save();
                     res.send({
                         success: true,
-                        status:200,
-                        message:"Password Updated",
-                        data:passwordChange
+                        status: 200,
+                        message: "Password Updated",
+                        data: passwordChange
                     })
                 }
-                else{
+                else {
                     res.send({
                         success: false,
-                        status:403,
-                        message:"Error: Invaild Credentials",
+                        status: 403,
+                        message: "Error: Invaild Credentials",
                     })
                 }
             }
@@ -123,7 +124,7 @@ export const changePass = async (req, res) => {
     }
 }
 
-export const changeStatus=async(req,res)=>{
+export const changeStatus = async (req, res) => {
     let validation = '';
     if (!req.body.email) {
         validation += "Email is required"
@@ -135,7 +136,7 @@ export const changeStatus=async(req,res)=>{
             message: "Validation Error : " + validation
         })
     }
-    else{
+    else {
         const userData = await userModel.findOne({ email: req.body.email })
         if (userData == null) {
             res.send({
@@ -144,27 +145,49 @@ export const changeStatus=async(req,res)=>{
                 message: "Email doesn't exist"
             })
         }
-        else{
+        else {
             try {
                 userData.status = !userData.status
-                const changeStatus=await userData.save();
-                res.send({
-                    success: true,
-                    status: 200,
-                    message: "Status changed",
-                    data:changeStatus
+                const changeStatus = await userData.save();
+                try {
+                    const customerData = await CustomerModel.findOne({ email: req.body.email })
+                    if (customerData == null) {
+                        res.send({
+                            success: false,
+                            status: 404,
+                            message: "Email doesn't exist"
+                        })
+                    }
+                    else {
+                        customerData.status = !customerData.status
+                        const changeStatus = await customerData.save();
+                        try{
+                            res.send({
+                                success: true,
+                                status: 200,
+                                message: "Status Changed",
+                                data: changeStatus
+                            })
+                        }
+                        catch{
 
-                })
+                        }
+                    }
+                    
+                } catch (error) {
+                    res.send({
+                        success: false,
+                        status: 500,
+                        message: "Error occured",
+                    })
+                }
             } catch (error) {
                 res.send({
                     success: false,
                     status: 500,
                     message: "Error occured",
-                    
-
                 })
             }
-           
         }
     }
 }
