@@ -6,7 +6,7 @@ import {login,changePass,changeStatus } from '../apis/user/userController.js';
 import { addCommitteeLog } from '../apis/committeeLog/committeeLogController.js';
 import { registerCustomer,updateCustomer } from '../apis/customer/customerController.js';
 import multer from 'multer';
-import { tokenChecker } from '../middleware/toeknChecker.js';
+import { tokenChecker } from '../middleware/tokenChecker.js';
 
 
 const router =express.Router();
