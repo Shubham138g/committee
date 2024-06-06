@@ -126,8 +126,8 @@ export const changePass = async (req, res) => {
 
 export const changeStatus = async (req, res) => {
     let validation = '';
-    if (!req.body.email) {
-        validation += "Email is required"
+    if (!req.body._id) {
+        validation += "_id is required"
     }
     if (!!validation) {
         res.send({
@@ -137,12 +137,12 @@ export const changeStatus = async (req, res) => {
         })
     }
     else {
-        const userData = await userModel.findOne({ email: req.body.email })
+        const userData = await userModel.findOne({ customerId: req.body._id })
         if (userData == null) {
             res.send({
                 success: false,
                 status: 404,
-                message: "Email doesn't exist"
+                message: "User doesn't exist"
             })
         }
         else {
@@ -150,30 +150,26 @@ export const changeStatus = async (req, res) => {
                 userData.status = !userData.status
                 const changeStatus = await userData.save();
                 try {
-                    const customerData = await CustomerModel.findOne({ email: req.body.email })
+                    const customerData = await CustomerModel.findOne({ _id: req.body._id })
                     if (customerData == null) {
                         res.send({
                             success: false,
                             status: 404,
-                            message: "Email doesn't exist"
+                            message: "User doesn't exist"
                         })
                     }
                     else {
                         customerData.status = !customerData.status
                         const changeStatus = await customerData.save();
-                        try{
-                            res.send({
-                                success: true,
-                                status: 200,
-                                message: "Status Changed",
-                                data: changeStatus
-                            })
-                        }
-                        catch{
 
-                        }
+                        res.send({
+                            success: true,
+                            status: 200,
+                            message: "Status Changed",
+                            data: changeStatus
+                        })
                     }
-                    
+
                 } catch (error) {
                     res.send({
                         success: false,

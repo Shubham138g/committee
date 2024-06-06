@@ -20,8 +20,18 @@ router.post("/admin/changePass",changePass);
 router.post("/admin/changestatus",changeStatus);
 
 //customer API
-const upload=multer()
-router.post("/customer/register",registerCustomer);
+const storage=multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,'server/public/user/')
+    },
+    filename:(req,file,cb)=>{
+        cb(null,Date.now()+file.originalname)
+    }
+})
+const upload=multer({
+    storage:storage
+})
+router.post("/customer/register",upload.single("user_image"),registerCustomer);
 router.post("/customer/update",updateCustomer);
 router.post("/customer/login",login);
 
