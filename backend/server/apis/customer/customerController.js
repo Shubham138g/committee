@@ -19,6 +19,9 @@ export const registerCustomer = async (req, res) => {
     if (!req.body.address) {
         validation += "Address is required";
     }
+    if (!req.file) {
+        validation += "Image is required";
+    }
 
     if (!!validation) {
         res.send({
@@ -55,6 +58,7 @@ export const registerCustomer = async (req, res) => {
                     custoemerObj.email = req.body.email;
                     custoemerObj.address = req.body.address;
                     custoemerObj.userId = savedUser._id;
+                    custoemerObj.image="user/"+req.file.filename;
                     const savedCustomer = await custoemerObj.save();
                     try {
                         savedUser.customerId = savedCustomer._id;

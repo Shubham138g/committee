@@ -12,9 +12,12 @@ const PORT=process.env.PORT;
 createAdminSeeder();
 Connection();
 
+
+//all middlewere
 app.use(cookieParser());
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('server/public/'));
 app.use(router);
 
 

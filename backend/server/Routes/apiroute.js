@@ -1,7 +1,7 @@
 import express from 'express';
 import { addCommittee,allCommittee,singleCommittee,updateCommittee,deleteCommittee } from '../apis/committee/committeeController.js';
 import { addSlip } from '../apis/slip/slipController.js';
-import { addBid } from '../apis/bid/bidController.js';
+import { addBid, allBid } from '../apis/bid/bidController.js';
 import {login,changePass,changeStatus } from '../apis/user/userController.js';
 import { addCommitteeLog } from '../apis/committeeLog/committeeLogController.js';
 import { registerCustomer,updateCustomer } from '../apis/customer/customerController.js';
@@ -17,8 +17,9 @@ const router =express.Router();
 // router.post("/admin/singleuser",singleUser);
 // router.post("/admin/updateuser",updateUser);
 // router.post("/admin/deleteeuser",deleteUser);
-router.post("/admin/changePass",changePass);
-router.post("/admin/changestatus",changeStatus);
+
+
+
 
 //customer API
 const storage=multer.diskStorage({
@@ -43,10 +44,11 @@ router.post("/customer/register",upload.single("user_image"),registerCustomer);
 // router.use(tokenChecker);
 
 
+//admin routes
+router.post("/admin/changePass",changePass);
+router.post("/admin/changestatus",changeStatus);
 
-
-
-
+//customer API
 router.post("/customer/update",updateCustomer);
 
 //committee routes
@@ -57,7 +59,6 @@ router.post("/admin/updateCommittee",updateCommittee);
 router.post("/admin/deleteCommittee",deleteCommittee);
 
 //committeeLog Routes
-
 router.post("/admin/addCommitteeLog",addCommitteeLog);
 
 //slip routes
@@ -66,6 +67,10 @@ router.post("/admin/addslip",addSlip);
 
 //bidroutes
 router.post("/admin/addbid",addBid);
+router.post("/admin/allbid",allBid);
+
+
+
 
 
 //place this route in the end of all of route
