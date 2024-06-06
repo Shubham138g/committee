@@ -47,7 +47,10 @@ export const addBid=async(req,res)=>{
 export const allBid=async(req,res)=>{
     let validation= ''
     if(!req.body.customerId){
-        validation +="customerId is reqquired \n"
+        validation +="customer Id is reqquired \n"
+    }
+    if(!req.body.committeeId){
+        validation +="committee Id is reqquired \n"
     }
 
     if(!!validation){
@@ -59,8 +62,11 @@ export const allBid=async(req,res)=>{
     }
     else{
         try {
-            const allbids=await bidModel.findOne({customerId:req.body.customerId}).exec()
-            if(allbids){
+            const allbids=await bidModel.find({
+                customerId:req.body.customerId,
+                committeeId:req.body.committeeId
+            }).exec()
+            if(!!allbids){
                 res.send({
                     success:true,
                     status:200,
@@ -72,7 +78,7 @@ export const allBid=async(req,res)=>{
                 res.send({
                     success:false,
                     status:404,
-                    message:"bid not found"
+                    message:"No bid found"
                 }) 
             }
           
@@ -80,7 +86,7 @@ export const allBid=async(req,res)=>{
             res.send({
                 success:false,
                 status:500,
-                message:"Validation Error"+validation
+                message:"Error occuerd "
             })
         }
     }
