@@ -1,6 +1,10 @@
 import CustomerModel from '../customer/customerModel.js';
 import userModel from './userModel.js';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const login = async (req, res) => {
     let validation = '';
@@ -30,11 +34,19 @@ export const login = async (req, res) => {
             else {
                 if (bcrypt.compareSync(req.body.password, userData.password)) {
                     if (userData.status) {
+                        const payload={
+                            _id:userData._id,
+                            email:userData.email,
+                            name:userData.name,
+                            userType:userData.userType
+                        }
+                        const token=jwt.sign(payload,process.env.SECRET)
                         res.send({
                             success: true,
                             status: 200,
                             message: "Login Successful",
-                            data: userData
+                            data: userData,
+                            token:token
                         })
                     }
                     else {
