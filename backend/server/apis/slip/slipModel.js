@@ -7,7 +7,7 @@ const slipSchema = new mongoose.Schema({
     unique: true,
   },
   customerId: {
-    type: mongoose.Schema.Types.ObjectId, // Assuming customerId is a reference to another collection
+    type: [mongoose.Schema.Types.ObjectId], // Assuming customerId is a reference to another collection
     ref: 'customer',
     default:null
   },
@@ -25,9 +25,9 @@ const slipSchema = new mongoose.Schema({
     default: Date.now // Default value for createdAt
   },
   status: {
-    type: String,
-    enum: ['pending', 'accepted', 'rejected'],
-    default: 'pending' // Default value for status
+    type: Boolean,
+    // enum: ['pending', 'accepted', 'rejected'],
+    default: true // Default value for status
   }
 });
 

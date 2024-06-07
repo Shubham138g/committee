@@ -1,6 +1,6 @@
 import express from 'express';
 import { addCommittee,allCommittee,singleCommittee,updateCommittee,deleteCommittee } from '../apis/committee/committeeController.js';
-import { addSlip } from '../apis/slip/slipController.js';
+import { addSlip, allSlip,singleSlip } from '../apis/slip/slipController.js';
 import { addBid, allBid } from '../apis/bid/bidController.js';
 import {login,changePass,changeStatus } from '../apis/user/userController.js';
 import { addCommitteeLog } from '../apis/committeeLog/committeeLogController.js';
@@ -63,6 +63,8 @@ router.post("/admin/addCommitteeLog",addCommitteeLog);
 
 //slip routes
 router.post("/admin/addslip",addSlip);
+router.post("/admin/allslip",allSlip);
+router.post("/admin/singleslip",singleSlip);
 
 
 //bidroutes
