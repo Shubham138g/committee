@@ -16,11 +16,11 @@ const committeeSchema = new mongoose.Schema({
     default: ''
   },
   startingDate: {
-    type: Date,
+    type: Number,
     default:null
   },
   endingDate: {
-    type: Date,
+    type: Number,
     default:null
   },
   totalMembers: {
@@ -28,6 +28,10 @@ const committeeSchema = new mongoose.Schema({
     default: 0 // Default value for totalMembers
   },
   amount: {
+    type: Number,
+    default: 0 // Default value for amount
+  },
+  perPersonAmount: {
     type: Number,
     default: 0 // Default value for amount
   },

@@ -1,6 +1,7 @@
 import userModel from '../user/userModel.js';
 import CustomerModel from './customerModel.js';
 import bcrypt from 'bcrypt';
+import fs from 'fs';
 
 export const registerCustomer = async (req, res) => {
     let validation = "";
@@ -21,6 +22,9 @@ export const registerCustomer = async (req, res) => {
     }
     if (!req.file) {
         validation += "Image is required";
+    }
+    if(!!req.body.imgExtError){
+        validation +=req.body.imgExtError
     }
 
     if (!!validation) {
@@ -58,7 +62,7 @@ export const registerCustomer = async (req, res) => {
                     custoemerObj.email = req.body.email;
                     custoemerObj.address = req.body.address;
                     custoemerObj.userId = savedUser._id;
-                    custoemerObj.image="user/"+req.file.filename;
+                    custoemerObj.image= "user/"+ req.file.filename;
                     const savedCustomer = await custoemerObj.save();
                     try {
                         savedUser.customerId = savedCustomer._id;
@@ -67,7 +71,7 @@ export const registerCustomer = async (req, res) => {
                             success: true,
                             status: 200,
                             message: "New User Added",
-                            data: savedCustomerData
+                            data: savedCustomer
                         })
                     } catch (error) {
                         res.send({
@@ -147,6 +151,10 @@ export const updateCustomer = async (req, res) => {
                             if (!!req.body.contact) customerData.contact = req.body.contact;
                             if (!!req.body.email) customerData.email = req.body.email;
                             if (!!req.body.address) customerData.address = req.body.address;
+                            if(!!req.file) {
+                                fs.unlinkSync("server/public/"+customerData.image)
+                                customerData.image = "user/"+ req.file.filename;
+                            }
                             const updateCustomer = await customerData.save();
                             res.send({
                                 success: true,

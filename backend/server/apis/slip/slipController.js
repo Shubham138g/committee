@@ -1,5 +1,7 @@
 import slipModel from "./slipModel.js";
 
+
+//add API
 export const addSlip = async (req, res) => {
     let validation = "";
     if (!req.body.customerId) {
@@ -45,6 +47,7 @@ export const addSlip = async (req, res) => {
     }
 }
 
+//All API
 export const allSlip = async (req, res) => {
 
 
@@ -68,6 +71,8 @@ export const allSlip = async (req, res) => {
     }
 }
 
+
+//Single API
 export const singleSlip=async(req,res)=>{
 
     let validation = "";

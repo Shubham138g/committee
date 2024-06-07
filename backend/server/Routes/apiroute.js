@@ -27,22 +27,25 @@ const storage=multer.diskStorage({
         cb(null,'server/public/user/')
     },
     filename:(req,file,cb)=>{
-        cb(null,Date.now()+file.originalname)
+        cb(null,Date.now()+"-"+file.originalname)
     }
 })
 const upload=multer({
     storage:storage
-    // ,
-    // limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
-    // fileFilter: (req, file, cb) => {
-    //     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-    //         cb(null, true);
-    //     } else {
-    //         cb(new Error('Only .jpg and .png files are allowed'), false);
-    //     }
-    // }
+    ,
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+            cb(null, true);
+        } else {
+            // cb(new Error('Only .jpg and .png files are allowed'), false);
+            req.body.imgExtError = "Only .jpg and .png files are allowed"
+            cb(null, true);
+        }
+    }
 })
 router.post("/login",login);
+//customer API
 router.post("/customer/register",upload.single('user_image'),registerCustomer);
 
 
@@ -64,7 +67,7 @@ router.post("/admin/changePass",changePass);
 router.post("/admin/changestatus",changeStatus);
 
 //customer API
-router.post("/customer/update",updateCustomer);
+router.post("/customer/update",upload.single('user_image'),updateCustomer);
 
 //committee routes
 router.post("/admin/addCommittee",addCommittee);

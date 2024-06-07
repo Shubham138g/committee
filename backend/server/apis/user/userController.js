@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+
+//login API
 export const login = async (req, res) => {
     let validation = '';
     if (!req.body.email) {
@@ -78,7 +80,7 @@ export const login = async (req, res) => {
     }
 }
 
-
+//Change Password API
 export const changePass = async (req, res) => {
     let validation = '';
     if (!req.body.email) {
@@ -136,6 +138,8 @@ export const changePass = async (req, res) => {
     }
 }
 
+
+//Chage Status API
 export const changeStatus = async (req, res) => {
     let validation = '';
     if (!req.body._id) {
