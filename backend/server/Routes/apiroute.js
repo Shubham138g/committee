@@ -32,16 +32,31 @@ const storage=multer.diskStorage({
 })
 const upload=multer({
     storage:storage
+    // ,
+    // limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+    // fileFilter: (req, file, cb) => {
+    //     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    //         cb(null, true);
+    //     } else {
+    //         cb(new Error('Only .jpg and .png files are allowed'), false);
+    //     }
+    // }
 })
 router.post("/login",login);
-router.post("/customer/register",upload.single("user_image"),registerCustomer);
+router.post("/customer/register",upload.single('user_image'),registerCustomer);
 
 
 
 
+
+//------------------------------------------------------start------------------------
 
 
 // router.use(tokenChecker);
+
+
+//------------------------------------------------------end------------------------
+
 
 
 //admin routes
