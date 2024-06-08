@@ -9,7 +9,7 @@ export const addCommittee = async (req, res) => {
     if (!req.body.committeeType) {
         validation += "committeeType is required \n";
     }
-    if (!req.body.startingDate) {
+    if (!req.body.startingMonth) {
         validation += "startingDate is required \n";
     }
     if (!req.body.totalMembers) {
@@ -34,10 +34,10 @@ export const addCommittee = async (req, res) => {
             committeeobj.committeeName = req.body.committeeName
             committeeobj.committeeType = req.body.committeeType
             committeeobj.totalMembers = req.body.totalMembers
-            committeeobj.startingDate = req.body.startingDate
+            committeeobj.startingMonth = req.body.startingMonth
             committeeobj.amount = req.body.amount
             committeeobj.months = committeeobj.totalMembers
-            committeeobj.endingDate = ((committeeobj.startingDate + committeeobj.months) % 12)-1  //0-Decemeber
+            committeeobj.endingMonth = ((committeeobj.startingMonth + committeeobj.months) % 12)-1  //0-Decemeber
             committeeobj.perPersonAmount = committeeobj.amount / committeeobj.totalMembers
             let data = await committeeobj.save();
             res.json({

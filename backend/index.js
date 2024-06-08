@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import Connection from './server/config/db.js';
 import router from './server/Routes/apiroute.js';
+import cors from 'cors';
 import { createAdminSeeder } from './server/config/seed.js';
 
 const app=express();
@@ -18,14 +19,15 @@ app.use(cookieParser());
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('server/public/'));
-app.use(router);
+app.use(cors());
 
 
 //routes
 app.get("/",(req,res)=>{
     res.send("saving circle server is running")
-})
-
+    })
+    
+app.use(router);
 
 
 app.listen(PORT, (error) => {

@@ -15,11 +15,11 @@ const committeeSchema = new mongoose.Schema({
     type: String,  // bid, slip
     default: ''
   },
-  startingDate: {
+  startingMonth: {
     type: Number,
     default:null
   },
-  endingDate: {
+  endingMonth: {
     type: Number,
     default:null
   },
