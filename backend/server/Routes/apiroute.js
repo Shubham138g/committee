@@ -4,7 +4,7 @@ import { addSlip, allSlip,deleteSlip,singleSlip, updateSlip } from '../apis/slip
 import { addBid, allBid } from '../apis/bid/bidController.js';
 import {login,changePass,changeStatus } from '../apis/user/userController.js';
 import { addCommitteeLog } from '../apis/committeeLog/committeeLogController.js';
-import { registerCustomer,updateCustomer } from '../apis/customer/customerController.js';
+import { registerCustomer,updateCustomer,allCustomer } from '../apis/customer/customerController.js';
 import multer from 'multer';
 import { tokenChecker } from '../middleware/tokenChecker.js';
 
@@ -21,7 +21,7 @@ const router =express.Router();
 
 
 
-//customer API
+//customer API start here------------------------------------------------------------------
 const storage=multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null,'server/public/user/')
@@ -45,10 +45,12 @@ const upload=multer({
     }
 })
 router.post("/login",login);
+
+
 //customer API
 router.post("/customer/register",upload.single('user_image'),registerCustomer);
 
-
+//customer API ENDS here------------------------------------------------------------------
 
 
 
@@ -67,6 +69,7 @@ router.post("/admin/changePass",changePass);
 router.post("/admin/changestatus",changeStatus);
 
 //customer API
+router.post("/customer/all",allCustomer);
 router.post("/customer/update",upload.single('user_image'),updateCustomer);
 
 //committee routes

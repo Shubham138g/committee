@@ -99,6 +99,24 @@ export const registerCustomer = async (req, res) => {
     }
 }
 
+export const allCustomer=async(req,res)=>{
+    try {
+        req.body.status = true
+        const data = await CustomerModel.find(req.body).exec();
+        res.json({
+            success: true,
+            status: 200,
+            total: data.length,
+            data: data
+        })
+    } catch (error) {
+        res.json({
+            success: false,
+            status: 500,
+            message: "Error Occured " + error.message
+        })
+    }
+}
 export const updateCustomer = async (req, res) => {
     let validation = '';
     if (!req.body._id) {
