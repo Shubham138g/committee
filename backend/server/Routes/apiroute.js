@@ -7,6 +7,7 @@ import { addCommitteeLog } from '../apis/committeeLog/committeeLogController.js'
 import { registerCustomer,updateCustomer,allCustomer } from '../apis/customer/customerController.js';
 import multer from 'multer';
 import { tokenChecker } from '../middleware/tokenChecker.js';
+import { addAssignComm } from '../apis/assignCommittee/assignCommitteeController.js';
 
 
 const router =express.Router();
@@ -95,7 +96,8 @@ router.post("/admin/addbid",addBid);
 router.post("/admin/allbid",allBid);
 
 
-
+//Assing committee API
+router.post("/admin/assigncomm",addAssignComm)
 
 
 //place this route in the end of all of route
