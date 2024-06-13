@@ -117,6 +117,47 @@ export const allCustomer=async(req,res)=>{
         })
     }
 }
+
+
+export const singleCusomter=async(req,res)=>{
+    let validation="";
+    if(!req.body._id){
+        validation +="_id is required"
+    }
+    if (!!validation) {
+        res.send({
+            success: false,
+            status: 400,
+            message: "Validation Error : " + validation
+        })
+    }else{
+        try {
+            const data =await CustomerModel.findOne({_id:req.body._id});
+            if(data==null){
+                res.send({
+                    success: false,
+                    status: 404,
+                    message: "User does not exits"
+                }) 
+            }
+            else{
+                res.json({
+                    success: true,
+                    status: 200,
+                    message: "Single user",
+                    data: data
+                })
+            }
+        } catch (error) {
+            res.send({
+                success: false,
+                status: 500,
+                message: "Error occuerd : "+error.message
+            }) 
+        }
+    }
+}
+
 export const updateCustomer = async (req, res) => {
     let validation = '';
     if (!req.body._id) {
@@ -196,6 +237,51 @@ export const updateCustomer = async (req, res) => {
                 success: false,
                 status: 500,
                 message: "Error occuerd" + error.message
+            })
+        }
+    }
+}
+
+//delete user API
+export const deleteCustomer = async (req, res) => {
+    let validation = ""
+    if (!req.body._id) {
+        validation += "_id is required"
+    }
+
+    if (!!validation) {
+        res.send({
+            success: false,
+            status: 400,
+            message: "Validation Error : " + validation
+        })
+    }
+    else {
+
+        try {
+            const data = await CustomerModel.findOne({ _id: req.body._id });
+            if (data == null) {
+                res.json({
+                    success: false,
+                    status: 404,
+                    message: "User Does't exist"
+                })
+            }
+            else {
+                data.status = "false"
+                const updateData = await data.save();
+                res.json({
+                    success: true,
+                    status: 200,
+                    message: "User deleted",
+                    data: updateData
+                })
+            }
+        } catch (error) {
+            res.json({
+                success: false,
+                status: 500,
+                message: "Error Occured " + error.message
             })
         }
     }

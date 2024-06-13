@@ -4,7 +4,7 @@ import { addSlip, allSlip,deleteSlip,singleSlip, updateSlip } from '../apis/slip
 import { addBid, allBid } from '../apis/bid/bidController.js';
 import {login,changePass,changeStatus } from '../apis/user/userController.js';
 import { addCommitteeLog } from '../apis/committeeLog/committeeLogController.js';
-import { registerCustomer,updateCustomer,allCustomer } from '../apis/customer/customerController.js';
+import { registerCustomer,updateCustomer,allCustomer, singleCusomter, deleteCustomer } from '../apis/customer/customerController.js';
 import multer from 'multer';
 import { tokenChecker } from '../middleware/tokenChecker.js';
 import { addAssignComm } from '../apis/assignCommittee/assignCommitteeController.js';
@@ -71,6 +71,8 @@ router.post("/admin/changestatus",changeStatus);
 
 //customer API
 router.post("/customer/all",allCustomer);
+router.post("/customer/single",singleCusomter);
+router.post("/customer/delete",deleteCustomer);
 router.post("/customer/update",upload.single('user_image'),updateCustomer);
 
 //committee routes
